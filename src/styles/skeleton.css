@@ -1,0 +1,69 @@
+/* ============================================================
+   SKELETON LOADERS
+   ============================================================ */
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+.skel-line, .skel-box {
+  border-radius: 6px;
+  background: linear-gradient(90deg,
+    var(--skel-base) 25%, var(--skel-shine) 50%, var(--skel-base) 75%);
+  background-size: 1200px 100%;
+  animation: shimmer 1.5s infinite linear;
+  height: 13px;
+  margin-bottom: 9px;
+}
+.skel-line.tall { height: 48px; border-radius: 10px; }
+.skel-box       { height: 56px; border-radius: 10px; margin-bottom: 0; }
+.skel-box.big   { height: 50px; width: 50px; border-radius: 12px; margin: 6px auto; }
+
+.w40 { width: 40%; }
+.w45 { width: 45%; }
+.w50 { width: 50%; }
+.w60 { width: 60%; }
+.w70 { width: 70%; }
+.w80 { width: 80%; }
+.w90 { width: 90%; }
+
+/* Phone skeleton */
+.phone-skeleton .skel-phone {
+  background: linear-gradient(155deg, #3a4daa 0%, #5a3a9a 100%);
+  border-radius: 28px; padding: 22px 20px 18px;
+  min-height: 360px;
+}
+.skel-stats-row {
+  display: flex; gap: 10px; margin-top: 16px;
+}
+.skel-stats-row .skel-box { flex: 1; height: 46px; }
+
+/* Forecast skeleton */
+.skel-forecast-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 10px;
+}
+.skel-forecast-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px; padding: 16px 12px;
+  animation: fadeUp 0.3s ease both;
+  animation-delay: calc(var(--i) * 0.07s);
+}
+
+/* News skeleton */
+.news-skeleton {
+  display: flex; flex-direction: column;
+  gap: 1px; background: var(--border);
+  border-radius: 14px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.ns-item {
+  background: var(--bg-card); padding: 13px 16px;
+  animation: fadeUp 0.3s ease both;
+  animation-delay: calc(var(--i) * 0.08s);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,477 @@
+/* ============================================================
+   CSS VARIABLES — THEME SYSTEM
+   ============================================================ */
+:root[data-theme="dark"] {
+  --bg-page:        #0d0f14;
+  --bg-card:        #141720;
+  --bg-card2:       #1a1e2b;
+  --bg-hover:       #1f2435;
+  --border:         rgba(255,255,255,0.08);
+  --border2:        rgba(255,255,255,0.14);
+  --text1:          #e8eaf0;
+  --text2:          #8890a8;
+  --text3:          #50586e;
+  --accent:         #5b7fff;
+  --accent-glow:    rgba(91,127,255,0.18);
+  --skel-base:      #1a1e2b;
+  --skel-shine:     #222840;
+  --shadow:         0 8px 32px rgba(0,0,0,0.45);
+  --tab-active:     #5b7fff;
+  --tab-text:       #fff;
+}
+:root[data-theme="light"] {
+  --bg-page:        #eef0f8;
+  --bg-card:        #ffffff;
+  --bg-card2:       #f3f4fb;
+  --bg-hover:       #f7f8fd;
+  --border:         rgba(0,0,0,0.07);
+  --border2:        rgba(0,0,0,0.13);
+  --text1:          #181b2e;
+  --text2:          #5a6080;
+  --text3:          #9098b5;
+  --accent:         #3b6ef5;
+  --accent-glow:    rgba(59,110,245,0.12);
+  --skel-base:      #e4e6f0;
+  --skel-shine:     #edeff7;
+  --shadow:         0 8px 32px rgba(0,0,0,0.09);
+  --tab-active:     #3b6ef5;
+  --tab-text:       #fff;
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-page);
+  color: var(--text1);
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  display: grid;
+  grid-template-columns: 180px 1fr 180px;
+  align-items: center;
+  padding: 0 2rem;
+  height: 62px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+.header-brand { display: flex; align-items: center; gap: 9px; }
+.brand-icon   { font-size: 1.3rem; }
+.brand-name   {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 1.15rem;
+  color: var(--text1); letter-spacing: -0.02em;
+}
+.header-center { display: flex; justify-content: center; }
+.header-actions { display: flex; justify-content: flex-end; }
+
+/* SEARCH */
+.search-bar { display: flex; gap: 7px; width: 320px; }
+.city-input {
+  flex: 1; padding: 8px 14px;
+  border-radius: 10px; border: 1px solid var(--border2);
+  background: var(--bg-card2); color: var(--text1);
+  font-family: 'Inter', sans-serif; font-size: 0.875rem;
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.city-input::placeholder { color: var(--text3); }
+.city-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.search-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: 10px;
+  border: none; background: var(--accent); color: #fff;
+  cursor: pointer; transition: opacity 0.2s, transform 0.15s; flex-shrink: 0;
+}
+.search-btn:hover  { opacity: 0.87; }
+.search-btn:active { transform: scale(0.95); }
+
+/* THEME TOGGLE */
+.theme-toggle {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 13px; border-radius: 50px;
+  border: 1px solid var(--border2); background: var(--bg-card2);
+  color: var(--text2); cursor: pointer;
+  font-size: 0.8rem; font-weight: 500; font-family: 'Inter',sans-serif;
+  transition: all 0.2s;
+}
+.theme-toggle:hover { color: var(--text1); border-color: var(--accent); }
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.app-container {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.75rem 1.5rem;
+  min-height: calc(100vh - 62px - 52px);
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .app-container { grid-template-columns: 1fr; padding: 1.25rem 1rem; }
+  .header { grid-template-columns: 1fr 1fr; }
+  .header-center { display: none; }
+  .search-bar { width: 100%; }
+}
+
+/* ============================================================
+   PHONE CARD  ← the 3D-style weather card
+   ============================================================ */
+.weather-col { display: flex; flex-direction: column; gap: 1rem; }
+
+.phone-card {
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  animation: fadeUp 0.4s ease;
+}
+
+.phone-inner {
+  background: linear-gradient(155deg, #5b7fff 0%, #7b5ea7 55%, #9b4fd0 100%);
+  padding: 22px 20px 18px;
+  display: flex; flex-direction: column; gap: 10px;
+  color: #fff; position: relative;
+  min-height: 360px;
+}
+
+/* subtle glass circles in bg */
+.phone-inner::before {
+  content: '';
+  position: absolute; top: -30px; right: -30px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  pointer-events: none;
+}
+.phone-inner::after {
+  content: '';
+  position: absolute; bottom: 40px; left: -40px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  pointer-events: none;
+}
+
+.phone-date   { font-size: 11px; opacity: 0.7; letter-spacing: 0.02em; }
+.phone-city   { font-family: 'Space Grotesk',sans-serif; font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+.phone-sub    { font-size: 10.5px; opacity: 0.65; margin-top: -7px; }
+
+.phone-main-row {
+  display: flex; align-items: flex-end; gap: 8px; margin: 4px 0;
+}
+.phone-temp {
+  font-family: 'Space Grotesk',sans-serif;
+  font-size: 64px; font-weight: 300; line-height: 1;
+  letter-spacing: -0.04em;
+}
+.phone-weather-icon { font-size: 52px; margin-bottom: 4px; }
+
+.phone-chart { width: 100%; margin: 4px 0; }
+
+.phone-stats {
+  display: flex; justify-content: space-around;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.18);
+}
+.stat-item   { text-align: center; }
+.stat-label  { font-size: 9px; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.05em; }
+.stat-val    { font-size: 13px; font-weight: 600; margin-top: 2px; }
+
+.phone-nav {
+  display: flex; justify-content: space-around;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.18);
+  margin-top: auto;
+}
+.nav-btn         { font-size: 18px; opacity: 0.5; cursor: pointer; transition: opacity 0.2s; }
+.nav-btn.active  { opacity: 1; }
+.nav-btn:hover   { opacity: 0.85; }
+
+/* ============================================================
+   RIGHT COLUMN
+   ============================================================ */
+.right-col     { display: flex; flex-direction: column; gap: 1.25rem; }
+.section-title {
+  font-family: 'Space Grotesk',sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--text1); letter-spacing: -0.02em;
+}
+
+/* ============================================================
+   FORECAST GRID
+   ============================================================ */
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 10px;
+}
+@media (max-width: 700px) { .forecast-grid { grid-template-columns: repeat(2,1fr); } }
+
+.forecast-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px 12px;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  cursor: pointer; transition: border-color 0.2s, transform 0.2s;
+  animation: fadeUp 0.35s ease both;
+}
+.forecast-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+
+.fc-day  { font-family: 'Space Grotesk',sans-serif; font-size: 14px; font-weight: 700; color: var(--text1); }
+.fc-date { font-size: 11px; color: var(--text3); margin-top: -4px; }
+.fc-icon { font-size: 40px; line-height: 1; margin: 6px 0; }
+.fc-range { font-size: 12px; color: var(--text2); }
+.fc-cond {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text1);
+}
+.fc-wind { font-size: 10px; color: var(--text3); }
+.fc-badge {
+  font-size: 10px; padding: 3px 9px; border-radius: 10px; font-weight: 600;
+  margin-top: 2px;
+}
+.badge-green { background: #dff6ec; color: #1a7a4a; }
+.badge-blue  { background: #ddeeff; color: #1a4fa0; }
+.badge-orange{ background: #fff0d9; color: #9a5500; }
+.badge-red   { background: #ffe5e5; color: #a01a1a; }
+
+/* ============================================================
+   CITIES GRID
+   ============================================================ */
+.cities-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
+}
+@media (max-width: 700px) { .cities-grid { grid-template-columns: repeat(2,1fr); } }
+
+.city-card {
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex; align-items: center; gap: 12px;
+  cursor: pointer; transition: transform 0.2s, opacity 0.2s;
+  animation: fadeUp 0.4s ease both;
+}
+.city-card:hover { transform: translateY(-2px); opacity: 0.9; }
+.city-card:nth-child(1) { background: linear-gradient(120deg,#dde4ff,#c8ceff); }
+.city-card:nth-child(2) { background: linear-gradient(120deg,#cfd9ff,#b8c4ff); }
+.city-card:nth-child(3) { background: linear-gradient(120deg,#c2cfff,#a8b5ff); }
+
+.cc-icon { font-size: 34px; flex-shrink: 0; }
+.cc-name { font-size: 13px; font-weight: 600; color: #1a2060; }
+.cc-temp { font-family: 'Space Grotesk',sans-serif; font-size: 24px; font-weight: 400; color: #1a2060; }
+
+/* ============================================================
+   NEWS
+   ============================================================ */
+.news-header-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; justify-content: space-between; }
+.category-tabs   { display: flex; gap: 6px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 5px 12px; border-radius: 50px;
+  border: 1px solid var(--border2); background: var(--bg-card2);
+  color: var(--text2); font-family: 'Inter',sans-serif;
+  font-size: 0.78rem; font-weight: 500; cursor: pointer;
+  transition: all 0.18s;
+}
+.tab-btn:hover  { border-color: var(--accent); color: var(--accent); }
+.tab-btn.active { background: var(--tab-active); border-color: var(--tab-active); color: var(--tab-text); }
+
+.news-feed {
+  display: flex; flex-direction: column;
+  gap: 1px; background: var(--border);
+  border-radius: 14px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.news-article {
+  display: flex; gap: 12px; padding: 13px 16px;
+  background: var(--bg-card); cursor: pointer;
+  text-decoration: none; color: inherit;
+  transition: background 0.18s;
+  animation: fadeUp 0.3s ease both;
+}
+.news-article:hover { background: var(--bg-hover); }
+.news-article:hover .n-title { color: var(--accent); }
+
+.n-num {
+  flex-shrink: 0; width: 22px; height: 22px;
+  border-radius: 6px; background: var(--bg-card2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: var(--text3); margin-top: 2px;
+}
+.n-body { flex: 1; min-width: 0; }
+.n-title {
+  font-family: 'Space Grotesk',sans-serif;
+  font-size: 0.9rem; font-weight: 600; line-height: 1.4;
+  color: var(--text1); transition: color 0.18s;
+  display: -webkit-box; line-clamp: 2; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 5px;
+}
+.n-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.n-source { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+.n-dot    { width: 3px; height: 3px; border-radius: 50%; background: var(--text3); flex-shrink: 0; }
+.n-time   { font-size: 11px; color: var(--text3); }
+.n-arrow  { flex-shrink: 0; color: var(--text3); opacity: 0; transition: opacity 0.18s; align-self: center; font-size: 12px; }
+.news-article:hover .n-arrow { opacity: 1; }
+
+/* ============================================================
+   ERROR / EMPTY
+   ============================================================ */
+.error-banner {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px; border-radius: 10px;
+  background: rgba(248,113,113,0.1);
+  border: 1px solid rgba(248,113,113,0.25);
+  color: #f87171; font-size: 0.84rem; font-weight: 500;
+  animation: fadeUp 0.2s ease;
+}
+.empty-state {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 10px; padding: 3rem 1rem; text-align: center;
+}
+.empty-icon { font-size: 2.5rem; opacity: 0.45; }
+.empty-state p { color: var(--text3); font-size: 0.87rem; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  text-align: center; padding: 1rem;
+  font-size: 0.77rem; color: var(--text3);
+  border-top: 1px solid var(--border);
+}
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+.hidden { display: none !important; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* ============================================================
+   CUSTOM ANIMATED WEATHER CURSOR
+   ============================================================ */
+* { cursor: none !important; }
+
+#weather-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 48px; height: 48px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.08s ease;
+}
+
+#cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 8px; height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 6px rgba(255,255,255,0.8);
+  transition: transform 0.04s ease;
+}
+
+#cursor-trail {
+  position: fixed;
+  top: 0; left: 0;
+  width: 28px; height: 28px;
+  border: 2px solid rgba(91,127,255,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99997;
+  transform: translate(-50%, -50%);
+  transition: all 0.12s ease;
+}
+
+/* Click burst animation */
+@keyframes cursorBurst {
+  0%   { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%,-50%) scale(2.5); opacity: 0; }
+}
+.cursor-click {
+  animation: cursorBurst 0.35s ease forwards !important;
+}
+
+/* Weather icon spin for sunny */
+@keyframes spinSun {
+  from { transform: translate(-50%,-50%) rotate(0deg); }
+  to   { transform: translate(-50%,-50%) rotate(360deg); }
+}
+.cursor-sunny { animation: spinSun 4s linear infinite; }
+
+/* Weather icon float for cloudy/rain */
+@keyframes floatCloud {
+  0%,100% { transform: translate(-50%,-50%) translateY(0px); }
+  50%      { transform: translate(-50%,-50%) translateY(-5px); }
+}
+.cursor-float { animation: floatCloud 2s ease-in-out infinite; }
+
+/* Lightning flash for storm */
+@keyframes flashStorm {
+  0%,90%,100% { opacity: 1; }
+  95%          { opacity: 0.2; }
+}
+.cursor-storm { animation: flashStorm 1.5s ease-in-out infinite; }
+
+/* Snow sway */
+@keyframes snowSway {
+  0%,100% { transform: translate(-50%,-50%) rotate(-8deg); }
+  50%      { transform: translate(-50%,-50%) rotate(8deg); }
+}
+.cursor-snow { animation: snowSway 1.8s ease-in-out infinite; }
+/* ============================================================
+   CURSOR — small dot + ring
+   ============================================================ */
+* { cursor: none !important; }
+
+#cursor-dot {
+  position: fixed;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #4f8ef7;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background 0.3s;
+}
+
+#cursor-ring {
+  position: fixed;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 2px solid #4f8ef7;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: width 0.15s, height 0.15s, border-color 0.3s, background 0.2s;
+}
+
+#cursor-dot.hover  { width: 10px; height: 10px; background: #e53935; }
+#cursor-ring.hover { width: 44px; height: 44px; border-color: #e53935; background: rgba(229,57,53,0.08); }
+
+@keyframes clickPop {
+  0%   { transform: translate(-50%,-50%) scale(1);   opacity: 1; }
+  100% { transform: translate(-50%,-50%) scale(2.2); opacity: 0; }
+}
+#cursor-ring.click { animation: clickPop 0.3s ease forwards; }

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WeatherNews Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="src/styles/main.css" />
+  <link rel="stylesheet" href="src/styles/news.css" />
+  <link rel="stylesheet" href="src/styles/skeleton.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-brand">
+      <span class="brand-icon">⚡</span>
+      <span class="brand-name">WeatherNews</span>
+    </div>
+    <div class="header-center">
+      <div class="search-bar">
+        <input type="text" id="cityInput" class="city-input" placeholder="Search city..." autocomplete="off" />
+        <button class="search-btn" id="searchBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span id="themeIcon">🌙</span>
+        <span id="themeLabel">Dark</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="app-container">
+
+    <!-- LEFT: WEATHER PHONE CARD -->
+    <section class="weather-col">
+
+      <!-- Error -->
+      <div class="error-banner hidden" id="weatherError">
+        <span>⚠️</span><span id="weatherErrorMsg">City not found.</span>
+      </div>
+
+      <!-- Skeleton -->
+      <div class="phone-skeleton hidden" id="weatherSkeleton">
+        <div class="skel-phone">
+          <div class="skel-line w50"></div>
+          <div class="skel-line w70 tall"></div>
+          <div class="skel-line w40"></div>
+          <div class="skel-stats-row">
+            <div class="skel-box"></div><div class="skel-box"></div><div class="skel-box"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone Card -->
+      <div class="phone-card hidden" id="phoneCard">
+        <div class="phone-inner">
+          <div class="phone-date" id="phoneDate">—</div>
+          <div class="phone-city" id="phoneCityName">—</div>
+          <div class="phone-sub" id="phoneSub">—</div>
+
+          <div class="phone-main-row">
+            <div class="phone-temp"><span id="phoneTemp">—</span>°</div>
+            <div class="phone-weather-icon" id="phoneIcon">⛅</div>
+          </div>
+
+          <svg class="phone-chart" viewBox="0 0 200 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polyline id="chartLine" points="0,34 40,26 80,20 120,14 160,20 200,28"
+              stroke="rgba(255,255,255,0.45)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle id="chartDot" cx="120" cy="14" r="3.5" fill="white"/>
+            <text id="chartLabel" x="120" y="10" fill="white" font-size="8" text-anchor="middle" font-family="Inter,sans-serif">34°C</text>
+            <text id="chartLeft"  x="6"   y="43" fill="rgba(255,255,255,0.55)" font-size="8" font-family="Inter,sans-serif">—</text>
+            <text id="chartRight" x="194" y="43" fill="rgba(255,255,255,0.55)" font-size="8" text-anchor="end" font-family="Inter,sans-serif">—</text>
+          </svg>
+
+          <div class="phone-stats">
+            <div class="stat-item">
+              <div class="stat-label">wind</div>
+              <div class="stat-val" id="statWind">—</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">humidity</div>
+              <div class="stat-val" id="statHumidity">—</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">air quality</div>
+              <div class="stat-val" id="statAQ">—</div>
+            </div>
+          </div>
+
+          <div class="phone-nav">
+            <span class="nav-btn active">🏠</span>
+            <span class="nav-btn">💨</span>
+            <span class="nav-btn">💧</span>
+            <span class="nav-btn">📈</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="weatherEmpty">
+        <div class="empty-icon">🌤️</div>
+        <p>Search a city to see weather</p>
+      </div>
+
+    </section>
+
+    <!-- RIGHT PANEL -->
+    <section class="right-col">
+
+      <!-- FORECAST -->
+      <div class="forecast-header">
+        <h2 class="section-title">4-Day Forecast</h2>
+      </div>
+
+      <!-- Forecast Skeleton -->
+      <div class="forecast-skeleton hidden" id="forecastSkeleton">
+        <div class="skel-forecast-grid">
+          <div class="skel-forecast-card" style="--i:1"><div class="skel-line w60"></div><div class="skel-box big"></div><div class="skel-line w80"></div></div>
+          <div class="skel-forecast-card" style="--i:2"><div class="skel-line w60"></div><div class="skel-box big"></div><div class="skel-line w80"></div></div>
+          <div class="skel-forecast-card" style="--i:3"><div class="skel-line w60"></div><div class="skel-box big"></div><div class="skel-line w80"></div></div>
+          <div class="skel-forecast-card" style="--i:4"><div class="skel-line w60"></div><div class="skel-box big"></div><div class="skel-line w80"></div></div>
+        </div>
+      </div>
+
+      <div class="forecast-grid" id="forecastGrid"></div>
+
+      <!-- NEARBY CITIES -->
+      <div class="cities-header">
+        <h2 class="section-title">Other Cities</h2>
+      </div>
+      <div class="cities-grid" id="citiesGrid">
+        <!-- rendered by JS -->
+      </div>
+
+      <!-- NEWS -->
+      <div class="news-header-row">
+        <h2 class="section-title">Top News</h2>
+        <div class="category-tabs" id="categoryTabs">
+          <button class="tab-btn active" data-category="general">General</button>
+          <button class="tab-btn" data-category="technology">Tech</button>
+          <button class="tab-btn" data-category="business">Business</button>
+          <button class="tab-btn" data-category="sports">Sports</button>
+          <button class="tab-btn" data-category="health">Health</button>
+        </div>
+      </div>
+
+      <div class="error-banner hidden" id="newsError">
+        <span>⚠️</span><span id="newsErrorMsg">Failed to load news.</span>
+      </div>
+
+      <div class="news-skeleton hidden" id="newsSkeleton">
+        <div class="ns-item" style="--i:1"><div class="skel-line w80"></div><div class="skel-line w50"></div></div>
+        <div class="ns-item" style="--i:2"><div class="skel-line w70"></div><div class="skel-line w45"></div></div>
+        <div class="ns-item" style="--i:3"><div class="skel-line w90"></div><div class="skel-line w60"></div></div>
+      </div>
+
+      <div class="news-feed" id="newsFeed"></div>
+      <div class="empty-state hidden" id="newsEmpty">
+        <div class="empty-icon">📰</div><p>No articles found</p>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="footer">
+    Powered by OpenWeatherMap &amp; GNews &nbsp;·&nbsp; Duggempudi Manikanta Reddy &nbsp;·&nbsp; <a href="mailto:duggempudimanikantareddy@gmail.com" style="color:inherit;text-decoration:underline;opacity:0.7;">duggempudimanikantareddy@gmail.com</a>
+  </footer>
+
+  <script type="module" src="src/utils/config.js"></script>
+  <script type="module" src="src/components/theme.js"></script>
+  <script type="module" src="src/components/weather.js"></script>
+  <script type="module" src="src/components/news.js"></script>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
